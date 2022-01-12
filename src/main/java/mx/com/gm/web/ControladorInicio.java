@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import mx.com.gm.domain.Persona;
 import mx.com.gm.servicio.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,14 +41,14 @@ public class ControladorInicio {
 
     @PostMapping("/guardarPersona")
     public String guardarPersona(@RequestBody Persona persona){
-        personaService.guardar(persona);
+        
         return "redirect:/";
     }
 
-    @PostMapping("/guardarPersonaToXML")
-    public String guardarPersonaToXML(@RequestBody Persona persona){
-        personaService.guardar(persona);
-        return "redirect:/";
+    @PostMapping(path = "guardarPersonaToXML", produces = MediaType.APPLICATION_XML_VALUE)
+    public List<Persona> guardarPersonaToXML(@RequestBody Persona persona){
+       
+        return personaService.listarPersonas();
     }
     
     @GetMapping("/editar/{idPersona}")
